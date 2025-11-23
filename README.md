@@ -21,24 +21,22 @@ Aplicação de notícias e vídeos com comentários e reações.
 - Painel do Administrador para publicar notícias e vídeos
 - Persistência em `localStorage` (sem backend)
 
-## Melhorias planejadas
+## Feito
 
- - ✔️ Estilos base e tema (CSS utilitário) para padronizar visual
- - ✔️ Página de detalhe do conteúdo (rota por `id`) com SEO básico
- - ✔️ Persistência da sessão de usuário (login lembrado)
- - ✔️ Limitação de uma reação por usuário com opção de trocar
- - ✔️ Moderação e validação de comentários (anti-spam)
- - ✔️ Remoção do polling (evento de atualização)
- - Busca e filtros por categoria/tags; páginas de tag
- - Paginação/Infinite Scroll no feed
- - Store global (Context/Reducer)
- - Backend/API para conteúdo e usuários; integração com banco
- - Testes unitários e pipeline de CI com GitHub Actions
- - Deploy (GitHub Pages/Vercel) com otimizações de performance
+- Estilos base e tema (CSS utilitário)
+- Página de detalhe do conteúdo (rota por `id`) com SEO básico
+- Persistência da sessão de usuário (login lembrado)
+- Limitação de uma reação por usuário com opção de trocar
+- Moderação e validação de comentários (anti-spam)
+- Remoção do polling com evento de atualização
+- Busca e filtros por tags/categorias
+- Paginação/Infinite Scroll no feed
+- Filtros aplicados nas abas Notícias e Vídeos
+- Home exibe 6 cards iniciais (3 + 3)
 
-## Próximos passos
+## A Fazer
 
-- Busca e filtros por tags/categorias.
-- Paginação/Infinite Scroll.
-- Store global para conteúdo e UI além do evento (opcional).
-- Backend/API, testes e pipeline CI, otimizações de deploy.
+- Store global (Context/Reducer) para conteúdo e UI
+- Backend/API para conteúdo e usuários; integração com banco
+- Testes unitários e pipeline de CI com GitHub Actions
+- Deploy (GitHub Pages/Vercel) com otimizações de performance
