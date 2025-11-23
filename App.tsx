@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import AuthModal from './components/AuthModal';
 import Home from './pages/Home';
 import AdminPanel from './pages/AdminPanel';
+import ContentDetail from './pages/ContentDetail';
 import ContentCard from './components/ContentCard';
 import { User, UserRole, ContentItem } from './types';
 import { getStoredContent } from './services/store';
@@ -19,17 +20,29 @@ const App: React.FC = () => {
       setContent(getStoredContent());
     };
     loadData();
-    // Poll for updates since we're using local storage across components
-    const interval = setInterval(loadData, 2000);
-    return () => clearInterval(interval);
+    const onUpdate = () => loadData();
+    window.addEventListener('geeknews:contentUpdated', onUpdate);
+    const storedUser = localStorage.getItem('geeknews_user');
+    if (storedUser) {
+      try {
+        const parsed = JSON.parse(storedUser);
+        setUser(parsed);
+      } catch {}
+    }
+    return () => {
+      window.removeEventListener('geeknews:contentUpdated', onUpdate);
+    };
   }, []);
 
   const handleLogin = (username: string, role: UserRole) => {
-    setUser({ username, role });
+    const u = { username, role };
+    setUser(u);
+    localStorage.setItem('geeknews_user', JSON.stringify(u));
   };
 
   const handleLogout = () => {
     setUser(null);
+    localStorage.removeItem('geeknews_user');
   };
 
   // Filter helpers
@@ -128,6 +141,10 @@ const App: React.FC = () => {
                     </div>
                 </div>
               )
+            } />
+
+            <Route path="/content/:id" element={
+              <ContentDetail user={user} onRequestLogin={() => setIsAuthOpen(true)} />
             } />
 
             <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,21 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { ReactionCounts, ReactionType, REACTION_ICONS } from '../types';
-import { getReactions, addReaction } from '../services/store';
+import { ReactionCounts, ReactionType } from '../types';
+import { getReactions, setUserReaction, getUserReaction } from '../services/store';
 import { ThumbsUp, ThumbsDown, Smile, Frown } from 'lucide-react';
 
 interface ReactionSystemProps {
   contentId: string;
   canReact: boolean;
   onRequestLogin: () => void;
+  username?: string;
 }
 
-const ReactionSystem: React.FC<ReactionSystemProps> = ({ contentId, canReact, onRequestLogin }) => {
+const ReactionSystem: React.FC<ReactionSystemProps> = ({ contentId, canReact, onRequestLogin, username }) => {
   const [counts, setCounts] = useState<ReactionCounts>({ LIKE: 0, DISLIKE: 0, HAPPY: 0, ANGRY: 0 });
   const [userReaction, setUserReaction] = useState<ReactionType | null>(null); // Simple local state tracking per session
 
   useEffect(() => {
     setCounts(getReactions(contentId));
-  }, [contentId]);
+    if (canReact && username) {
+      setUserReaction(getUserReaction(contentId, username));
+    } else {
+      setUserReaction(null);
+    }
+  }, [contentId, canReact, username]);
 
   const handleReaction = (type: ReactionType) => {
     if (!canReact) {
@@ -23,9 +29,8 @@ const ReactionSystem: React.FC<ReactionSystemProps> = ({ contentId, canReact, on
       return;
     }
     
-    // In this simple version, users can spam reactions locally for fun, 
-    // or we restrict to one per session. Let's allow adding to count.
-    const newCounts = addReaction(contentId, type);
+    if (!username) return;
+    const newCounts = setUserReaction(contentId, username, type);
     setCounts(newCounts);
     setUserReaction(type);
   };

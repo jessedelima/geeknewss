@@ -3,6 +3,7 @@ import { ContentItem, User } from '../types';
 import ReactionSystem from './ReactionSystem';
 import CommentSection from './CommentSection';
 import { PlayCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 interface ContentCardProps {
   item: ContentItem;
@@ -38,7 +39,9 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, user, onRequestLogin })
                 </span>
             ))}
         </div>
-        <h3 className="text-xl font-bold text-white mb-2 leading-tight">{item.title}</h3>
+        <Link to={`/content/${item.id}`} className="text-xl font-bold text-white mb-2 leading-tight hover:text-geek-primary">
+          {item.title}
+        </Link>
         
         {item.category === 'VIDEO' && item.videoUrl ? (
             <div className="mb-4 mt-2 aspect-video rounded-lg overflow-hidden bg-black shadow-inner">
@@ -71,6 +74,7 @@ const ContentCard: React.FC<ContentCardProps> = ({ item, user, onRequestLogin })
           contentId={item.id} 
           canReact={!!user} 
           onRequestLogin={onRequestLogin} 
+          username={user?.username}
         />
         
         <div className="mt-4">

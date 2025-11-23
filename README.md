@@ -23,14 +23,14 @@ Aplicação de notícias e vídeos com comentários e reações.
 
 ## Melhorias planejadas
 
-- Estilos base e tema (CSS utilitário) para padronizar visual
-- Página de detalhe do conteúdo (rota por `id`) com SEO básico
-- Persistência da sessão de usuário (login lembrado)
-- Limitação de uma reação por usuário com opção de trocar
-- Moderação e validação de comentários (anti-spam)
+- ✔️ Estilos base e tema (CSS utilitário) para padronizar visual
+- ✔️ Página de detalhe do conteúdo (rota por `id`) com SEO básico
+- ✔️ Persistência da sessão de usuário (login lembrado)
+- ✔️ Limitação de uma reação por usuário com opção de trocar
+- ✔️ Moderação e validação de comentários (anti-spam)
 - Busca e filtros por categoria/tags; páginas de tag
 - Paginação/Infinite Scroll no feed
-- Store global (Context/Reducer) e remoção do polling
+- ✔️ Store global (Context/Reducer) e remoção do polling
 - Backend/API para conteúdo e usuários; integração com banco
 - Testes unitários e pipeline de CI com GitHub Actions
 - Deploy (GitHub Pages/Vercel) com otimizações de performance

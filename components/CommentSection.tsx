@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Comment, User } from '../types';
-import { getComments, addComment } from '../services/store';
+import { getComments, addComment, canUserComment } from '../services/store';
 import { MessageSquare, Send } from 'lucide-react';
 
 interface CommentSectionProps {
@@ -12,6 +12,7 @@ interface CommentSectionProps {
 const CommentSection: React.FC<CommentSectionProps> = ({ contentId, user, onRequestLogin }) => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     setComments(getComments(contentId));
@@ -23,7 +24,9 @@ const CommentSection: React.FC<CommentSectionProps> = ({ contentId, user, onRequ
       onRequestLogin();
       return;
     }
-    if (!newComment.trim()) return;
+    setError('');
+    const check = canUserComment(contentId, user.username, newComment);
+    if (!check.ok) { setError(check.reason || 'Inválido'); return; }
 
     const comment: Comment = {
       id: Date.now().toString(),
@@ -62,6 +65,7 @@ const CommentSection: React.FC<CommentSectionProps> = ({ contentId, user, onRequ
             <Send size={20} />
           </button>
         </div>
+        {error && <p className="text-red-500 text-xs mt-2">{error}</p>}
       </form>
 
       <div className="space-y-4">
