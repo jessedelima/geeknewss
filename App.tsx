@@ -35,6 +35,8 @@ const App: React.FC = () => {
   // Filter helpers
   const newsContent = content.filter(c => c.category === 'NEWS');
   const videoContent = content.filter(c => c.category === 'VIDEO');
+  const newsDisplay = newsContent.length ? Array.from({ length: 6 }, (_, i) => newsContent[i % newsContent.length]) : [];
+  const videoDisplay = videoContent.length ? Array.from({ length: 6 }, (_, i) => videoContent[i % videoContent.length]) : [];
 
   // Social Media Data with SVG Paths
   const SOCIAL_LINKS = [
@@ -93,8 +95,8 @@ const App: React.FC = () => {
               <div className="max-w-7xl mx-auto px-4 py-8">
                  <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-geek-primary pl-4 bg-black/30 p-4 rounded-r-lg backdrop-blur-sm">Todas as Notícias</h2>
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 {newsContent.map(item => (
-                   <div key={item.id}>
+                 {newsDisplay.map((item, idx) => (
+                   <div key={`${item.id}-${idx}`}>
                        <ContentCard item={item} user={user} onRequestLogin={() => setIsAuthOpen(true)} />
                    </div>
                  ))}
@@ -106,8 +108,8 @@ const App: React.FC = () => {
               <div className="max-w-7xl mx-auto px-4 py-8">
                  <h2 className="text-3xl font-bold text-white mb-8 border-l-4 border-geek-secondary pl-4 bg-black/30 p-4 rounded-r-lg backdrop-blur-sm">Galeria de Vídeos</h2>
                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                 {videoContent.map(item => (
-                   <div key={item.id}>
+                 {videoDisplay.map((item, idx) => (
+                   <div key={`${item.id}-${idx}`}>
                        <ContentCard item={item} user={user} onRequestLogin={() => setIsAuthOpen(true)} />
                    </div>
                  ))}

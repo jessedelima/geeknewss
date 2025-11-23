@@ -10,8 +10,8 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = ({ content, user, onRequestLogin }) => {
-  // Sort by newest
   const sortedContent = [...content].sort((a, b) => b.timestamp - a.timestamp);
+  const displayContent = sortedContent.length ? Array.from({ length: 6 }, (_, i) => sortedContent[i % sortedContent.length]) : [];
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -32,9 +32,9 @@ const Home: React.FC<HomeProps> = ({ content, user, onRequestLogin }) => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {sortedContent.map(item => (
+        {displayContent.map((item, idx) => (
           <ContentCard 
-            key={item.id} 
+            key={`${item.id}-${idx}`} 
             item={item} 
             user={user} 
             onRequestLogin={onRequestLogin} 
